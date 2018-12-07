@@ -33,10 +33,6 @@ def run_experiment(error, alpha, m, iter=1000):
 		if i%100 == 0:
 			print("iteration number:", i)
 
-		# randomly sample x, y
-		x = random.choice(patterns)
-		y = random.choice(patterns)
-
 		# run Markov chain
 		tm = transition_matrix(h, error, alpha, m)
 		h_next = tm.sample()
@@ -52,30 +48,27 @@ def run_experiment(error, alpha, m, iter=1000):
 if __name__ == '__main__':
 	xs = [(c, True) for c in all_compositionals] + [(ho, False) for ho in all_holistics]
 
-	n = 4 # number of experiments
-	errors = [0.05, 0.05, 0.05, 0.05]
-	alphas = [0.5, 0.01, 0.5, 0.01]
-	ms = [1, 1, 3, 3]
+	# n = 4 # number of experiments
+	# errors = [0.05, 0.05, 0.05, 0.05]
+	# alphas = [0.5, 0.01, 0.5, 0.01]
+	# ms = [1, 1, 3, 3]
 
-	for i in range(n):
-		print("running experiment", i, "...")
-		result = run_experiment(errors[i], alphas[i], ms[i])
-		graph_distribution(xs, result[1], "dist" + str(i) + ".png")
-		graph_distribution(xs, result[2], "true_dist" + str(i) + ".png")
-		plt.clf()
-		with open("experiment" + str(i) + ".txt", 'a+') as f:
-			for item in result:
-				f.write(str(item))
-				f.write('\n')
-				f.write('\n')
+	# for i in range(n):
+	# 	print("running experiment", i, "...")
+	# 	result = run_experiment(errors[i], alphas[i], ms[i])
+	# 	graph_distribution(xs, result[1], "dist" + str(i) + ".png")
+	# 	graph_distribution(xs, result[2], "true_dist" + str(i) + ".png")
+	# 	plt.clf()
+	# 	with open("experiment" + str(i) + ".txt", 'a+') as f:
+	# 		for item in result:
+	# 			f.write(str(item))
+	# 			f.write('\n')
+	# 			f.write('\n')
 
 	# test
-	# result = run_experiment(0.05, 0.5, 1, 5)
+	# result = run_experiment(0.05, 0.5, 1, 500)
 	# graph_distribution(xs, result[1], "dist.png")
 	# graph_distribution(xs, result[2], "true_dist.png")
-	# plt.clf()
-	# graph_distribution(xs, result[1], "dist2.png")
-	# graph_distribution(xs, result[2], "true_dist2.png")
 	# plt.clf()
 	# with open('test.txt', 'a+') as f:
 	# 	for item in result:
