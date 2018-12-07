@@ -35,7 +35,7 @@ def calc_pyx(x, y, error, alpha):
 
 
 # p(h_n+1|xn,yn)
-def calculate_posterior(h_next, x, y, error, alpha):
+def calc_posterior(h_next, x, y, error, alpha):
 	"""
 	h_next = [hypothesis, is_compositional]
 	"""
@@ -43,8 +43,3 @@ def calculate_posterior(h_next, x, y, error, alpha):
 	pyxh_next = calc_pyxh(y, x, h_next[0], error)
 	ph_next = prior(alpha, h_next[1])
 	return pyxh_next*ph_next/pyx
-
-
-# test
-# h_next = [("00","11","11","01"), False]
-# print(calculate_posterior(h_next, "01", "00", 0.05, 0.5))

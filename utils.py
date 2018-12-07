@@ -65,4 +65,15 @@ class Distribution(dict):
 		z = sum(self.values()) # normalization constant
 		for key in self.keys():
 			self[key] /= z
+
+	def sample(self):
+		# randomly choose a sample based on the distribution
+		keys = []
+		probs = []
+		for key, prob in self.items():
+			keys.append(key)
+			probs.append(prob)
+
+		rand_idx = np.where(np.random.multinomial(1, probs))[0][0]
+		return keys[rand_idx]
 		

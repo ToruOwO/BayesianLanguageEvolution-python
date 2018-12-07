@@ -17,19 +17,19 @@ def sample_hypothesis(alpha):
 	allocating a probability of alpha to the set of compositional 
 	languages and 1-alpha to the set of holistic languages.
 
-	Return value: [hypothesis, is_compositional]
-	Return type: list
+	Return value: (hypothesis, is_compositional)
+	Return type: tuple
 	"""
 	is_compositional = np.random.binomial(1, alpha)
 
 	if is_compositional:
 		# make a compositional prior
 		h = random.choice(all_compositionals)
-		return [h, True]
+		return (h, True)
 	else:
 		# make a holistic prior
 		h = random.choice(all_holistics)
-		return [h, False]
+		return (h, False)
 
 def sample_distribution(alpha):
 	dist = Distribution()
@@ -39,8 +39,3 @@ def sample_distribution(alpha):
 		dist[h] += prior(alpha, False)
 	dist.normalize()
 	return dist
-
-# test
-# print(all_compositionals)
-# print(sample_hypothesis(0.5))
-# print(sample_distribution(0.5))

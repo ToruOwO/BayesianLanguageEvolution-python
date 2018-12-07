@@ -1,6 +1,7 @@
 import random
 import matplotlib.pyplot as plt
 from hypothesis import sample_hypothesis
+from transition import transition_matrix
 from utils import Distribution
 
 patterns = ["00", "01", "11", "10"]
@@ -12,8 +13,8 @@ def run_experiment(error, alpha, m, iter=1000):
 	dist = Distribution()
 
 	# initialize h1 randomly
-	h = sample_hypothesis(alpha)[0]
-	samples.append(h[0])
+	h = sample_hypothesis(alpha) # [hypothesis, is_comp]
+	samples.append(h)
 	dist[h] += 1
 
 	for i in range(iter):
@@ -22,11 +23,16 @@ def run_experiment(error, alpha, m, iter=1000):
 		y = random.choice(patterns)
 
 		# run Markov chain
-		h_next = transition(h, m)
+		tm = transition_matrix(h, error, alpha, m)
+		h_next = tm.sample()
 		samples.append(h_next)
-		dist[curr] += 1
+		dist[h_next] += 1
+		h = h_next
 
 	dist.normalize()
+
+	print(dist)
+	print(samples)
 
 	# make graphs
 
@@ -37,10 +43,13 @@ def run_experiment(error, alpha, m, iter=1000):
 
 
 if __name__ == '__main__':
-	n = 4 # number of experiments
-	errors = [0.05, 0.05, 0.05, 0.05]
-	alphas = [0.5, 0.5, 0.5, 0.01]
-	m = [1, 3, 10, 3]
+	# n = 4 # number of experiments
+	# errors = [0.05, 0.05, 0.05, 0.05]
+	# alphas = [0.5, 0.5, 0.5, 0.01]
+	# m = [1, 3, 10, 3]
 
-	for i in range(n):
-		run_experiment(errors[i], alphas[i], m[i])
+	# for i in range(n):
+	# 	run_experiment(errors[i], alphas[i], m[i])
+
+	# test
+	run_experiment(0.05, 0.5, 1, 10)
