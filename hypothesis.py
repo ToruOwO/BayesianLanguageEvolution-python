@@ -34,8 +34,8 @@ def sample_hypothesis(alpha):
 def sample_distribution(alpha):
 	dist = Distribution()
 	for c in all_compositionals:
-		dist[c] += prior(alpha, True)
+		dist[(c, True)] = prior(alpha, True)
 	for h in all_holistics:
-		dist[h] += prior(alpha, False)
+		dist[(h, False)] = prior(alpha, False)
 	dist.normalize()
 	return dist
